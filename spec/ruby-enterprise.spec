@@ -1,5 +1,5 @@
 # Package Maintainer: Increment phusion_release to match latest release available
-%define phusion_release	2010.01
+%define phusion_release	2012.02
 %define ree_prefix /opt/ruby
 
 Summary: Ruby Enterprise Edition (Release %{phusion_release})
@@ -17,8 +17,6 @@ Source0: ruby-enterprise-%{version}-%{phusion_release}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{phusion_release}-root-%(%{__id_u} -n)
 BuildRequires: readline readline-devel ncurses ncurses-devel gdbm gdbm-devel glibc-devel autoconf gcc unzip openssl-devel db4-devel byacc
 BuildRequires: ruby
-
-Patch0: net_http_socket_close.patch
 
 %description
 Ruby Enterprise Edition is a server-oriented friendly branch of Ruby which includes various enhancements:
@@ -84,6 +82,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc rubygems/ChangeLog
 
 %changelog
+* Wed Jun 06 2012 Rafael Felix Correa <rafael dot felix at rf4solucoes dot com dot br>
+- Updated for release 2012.02
+
 * Fri May 07 2010 Brad Fults <brad at causes dot com>
 - Updated for release 2010.01
 - Changed default destination to /opt/ruby via ree_prefix variable
