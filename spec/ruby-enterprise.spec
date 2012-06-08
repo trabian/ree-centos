@@ -41,7 +41,7 @@ RubyGems is the Ruby standard for publishing and managing third party
 libraries. This rubygems package is for ruby-enterprise.
 
 %build
-./installer --auto %{ree_prefix} --dont-install-useful-gems --destdir $RPM_BUILD_ROOT --no-dev-docs --without-X11
+./installer --auto %{ree_prefix} --dont-install-useful-gems --destdir $RPM_BUILD_ROOT --no-dev-docs
 
 %install
 # no-op
@@ -57,7 +57,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc source/LEGAL
 %doc source/LGPL
 %doc source/NEWS
-#%doc source/README
+%doc source/README
 %doc source/README.EXT
 %doc source/ToDo
 
@@ -83,7 +83,6 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Wed Jun 06 2012 Rafael Felix Correa <rafael dot felix at rf4solucoes dot com dot br>
 - Updated for release 2012.02
-- Added --without-X11 to the build step
 - Updated doc list for rubygems
 
 * Fri May 07 2010 Brad Fults <brad at causes dot com>
