@@ -28,8 +28,6 @@ Ruby Enterprise Edition is a server-oriented friendly branch of Ruby which inclu
 %prep
 %setup -q -n ruby-enterprise-%{version}-%{phusion_release}
 
-%patch0 -p0
-
 %package rubygems
 Summary: The Ruby standard for packaging ruby libraries
 Version: 1.3.5
@@ -43,7 +41,7 @@ RubyGems is the Ruby standard for publishing and managing third party
 libraries. This rubygems package is for ruby-enterprise.
 
 %build
-./installer --auto %{ree_prefix} --dont-install-useful-gems --destdir $RPM_BUILD_ROOT --no-dev-docs
+./installer --auto %{ree_prefix} --dont-install-useful-gems --destdir $RPM_BUILD_ROOT --no-dev-docs --without-X11
 
 %install
 # no-op
@@ -59,31 +57,34 @@ rm -rf $RPM_BUILD_ROOT
 %doc source/LEGAL
 %doc source/LGPL
 %doc source/NEWS
-%doc source/README
+#%doc source/README
 %doc source/README.EXT
 %doc source/ToDo
 
 # rubygems
 %exclude %{ree_prefix}/bin/gem
-%exclude %{ree_prefix}/lib/ruby/gems
 %exclude %{ree_prefix}/lib/ruby/site_ruby/1.8/rubygems*
 %exclude %{ree_prefix}/lib/ruby/site_ruby/1.8/ubygems.rb
 %exclude %{ree_prefix}/lib/ruby/site_ruby/1.8/rbconfig
 
 %files rubygems
 %{ree_prefix}/bin/gem
-%{ree_prefix}/lib/ruby/gems
 %{ree_prefix}/lib/ruby/site_ruby/1.8/rubygems*
 %{ree_prefix}/lib/ruby/site_ruby/1.8/ubygems.rb
 %{ree_prefix}/lib/ruby/site_ruby/1.8/rbconfig
+%doc rubygems/History.txt
 %doc rubygems/LICENSE.txt
-%doc rubygems/README
-%doc rubygems/GPL.txt
-%doc rubygems/ChangeLog
+%doc rubygems/MIT.txt
+%doc rubygems/Manifest.txt
+%doc rubygems/README.rdoc
+%doc rubygems/UPGRADING.rdoc
+
 
 %changelog
 * Wed Jun 06 2012 Rafael Felix Correa <rafael dot felix at rf4solucoes dot com dot br>
 - Updated for release 2012.02
+- Added --without-X11 to the build step
+- Updated doc list for rubygems
 
 * Fri May 07 2010 Brad Fults <brad at causes dot com>
 - Updated for release 2010.01
