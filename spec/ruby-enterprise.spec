@@ -33,15 +33,17 @@ Summary: The Ruby standard for packaging ruby libraries
 Version: 1.3.5
 License: Ruby or GPL+
 Group: Development/Libraries
-Requires: ruby-enterprise >= 1.8
+Requires: ruby-enterprise >= 1.8 mysql >= 5.0
 Provides: ruby-enterprise(rubygems) = %{version}
+
+BuildRequires: mysql-devel >= 5.0
 
 %description rubygems
 RubyGems is the Ruby standard for publishing and managing third party
 libraries. This rubygems package is for ruby-enterprise.
 
 %build
-./installer --auto %{ree_prefix} --dont-install-useful-gems --destdir $RPM_BUILD_ROOT --no-dev-docs
+./installer --auto %{ree_prefix} --destdir $RPM_BUILD_ROOT --no-dev-docs
 
 %install
 # no-op
@@ -63,12 +65,15 @@ rm -rf $RPM_BUILD_ROOT
 
 # rubygems
 %exclude %{ree_prefix}/bin/gem
+%exclude %{ree_prefix}/lib/ruby/gems
 %exclude %{ree_prefix}/lib/ruby/site_ruby/1.8/rubygems*
 %exclude %{ree_prefix}/lib/ruby/site_ruby/1.8/ubygems.rb
 %exclude %{ree_prefix}/lib/ruby/site_ruby/1.8/rbconfig
 
 %files rubygems
+%exclude %{ree_prefix}/lib/ruby/gems/1.8/cache
 %{ree_prefix}/bin/gem
+%{ree_prefix}/lib/ruby/gems
 %{ree_prefix}/lib/ruby/site_ruby/1.8/rubygems*
 %{ree_prefix}/lib/ruby/site_ruby/1.8/ubygems.rb
 %{ree_prefix}/lib/ruby/site_ruby/1.8/rbconfig
@@ -79,11 +84,16 @@ rm -rf $RPM_BUILD_ROOT
 %doc rubygems/README.rdoc
 %doc rubygems/UPGRADING.rdoc
 
+%post
+# Promote to default ruby if there are no other version installed
+if [ ! -f /usr/bin/ruby ]; then
+  ln -s %{ree_prefix}/bin/ruby /usr/bin/ruby
+fi
 
 %changelog
 * Wed Jun 06 2012 Rafael Felix Correa <rafael dot felix at rf4solucoes dot com dot br>
 - Updated for release 2012.02
-- Updated doc list for rubygems
+- Updated doc and file list for rubygems
 
 * Fri May 07 2010 Brad Fults <brad at causes dot com>
 - Updated for release 2010.01
