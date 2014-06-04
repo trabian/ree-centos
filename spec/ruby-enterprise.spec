@@ -29,7 +29,7 @@ Ruby Enterprise Edition is a server-oriented friendly branch of Ruby which inclu
 
 %prep
 %setup -q -n ruby-enterprise-%{version}-%{phusion_release}
-%patch -P 0
+%patch -P 0 -F1
 
 %package rubygems
 Summary: The Ruby standard for packaging ruby libraries
