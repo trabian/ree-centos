@@ -42,10 +42,10 @@ RubyGems is the Ruby standard for publishing and managing third party
 libraries. This rubygems package is for ruby-enterprise.
 
 %build
-./installer --auto %{ree_prefix} --dont-install-useful-gems --destdir $RPM_BUILD_ROOT --no-dev-docs
+# no-op
 
 %install
-# no-op
+./installer --auto %{ree_prefix} --dont-install-useful-gems --destdir $RPM_BUILD_ROOT --no-dev-docs
 
 %clean
 rm -rf $RPM_BUILD_ROOT
