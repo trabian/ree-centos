@@ -107,6 +107,11 @@ if [ ! -f /usr/bin/testrb ]; then
 fi
 
 %changelog
+* Wed Jun 04 2014 David Radcliffe <radcliffe.david@gmail.com>
+- Added ssl_no_ec2m patch
+- Fixed build/install order
+- Linked all bins
+
 * Wed Jun 06 2012 Rafael Felix Correa <rafael dot felix at rf4solucoes dot com dot br>
 - Updated for release 2012.02
 - Updated doc and file list for rubygems
