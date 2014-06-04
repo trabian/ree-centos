@@ -83,9 +83,27 @@ rm -rf $RPM_BUILD_ROOT
 %doc rubygems/UPGRADING.rdoc
 
 %post
-# Promote to default ruby if there are no other version installed
+# Symlink bins (without clobbering!)
 if [ ! -f /usr/bin/ruby ]; then
   ln -s %{ree_prefix}/bin/ruby /usr/bin/ruby
+fi
+if [ ! -f /usr/bin/irb ]; then
+  ln -s %{ree_prefix}/bin/irb /usr/bin/irb
+fi
+if [ ! -f /usr/bin/erb ]; then
+  ln -s %{ree_prefix}/bin/erb /usr/bin/erb
+fi
+if [ ! -f /usr/bin/rdoc ]; then
+  ln -s %{ree_prefix}/bin/rdoc /usr/bin/rdoc
+fi
+if [ ! -f /usr/bin/ree-version ]; then
+  ln -s %{ree_prefix}/bin/ree-version /usr/bin/ree-version
+fi
+if [ ! -f /usr/bin/ri ]; then
+  ln -s %{ree_prefix}/bin/ri /usr/bin/ri
+fi
+if [ ! -f /usr/bin/testrb ]; then
+  ln -s %{ree_prefix}/bin/testrb /usr/bin/testrb
 fi
 
 %changelog
