@@ -1,0 +1,56 @@
+--- source/lib/rexml/document.rb	2012-02-19 09:09:11.000000000 -0500
++++ source/lib/rexml/document-patched.rb	2014-11-13 15:16:54.000000000 -0500
+@@ -222,6 +222,10 @@
+       end
+     end
+
++    def document
++      self
++    end
++
+ 		private
+ 		def build( source )
+       Parsers::TreeParser.new( source, self ).parse
+--- source/test/rexml/test_document.rb	2012-02-19 09:09:11.000000000 -0500
++++ source/test/rexml/test_document-patched.rb	2014-11-13 15:37:17.000000000 -0500
+@@ -26,6 +26,21 @@
+ </member>
+ EOF
+
++    XML_WITH_NESTED_EMPTY_ENTITY = <<EOF
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE member [
++  <!ENTITY a "&b;&b;&b;&b;&b;&b;&b;&b;&b;&b;">
++  <!ENTITY b "&c;&c;&c;&c;&c;&c;&c;&c;&c;&c;">
++  <!ENTITY c "&d;&d;&d;&d;&d;&d;&d;&d;&d;&d;">
++  <!ENTITY d "&e;&e;&e;&e;&e;&e;&e;&e;&e;&e;">
++  <!ENTITY e "&f;&f;&f;&f;&f;&f;&f;&f;&f;&f;">
++  <!ENTITY f "&g;&g;&g;&g;&g;&g;&g;&g;&g;&g;">
++  <!ENTITY g "">
++]>
++<member>
++&a;
++</member>
++EOF
+   XML_WITH_4_ENTITY_EXPANSION = <<EOF
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE member [
+@@ -52,6 +67,18 @@
+     end
+     assert_equal(101, doc.entity_expansion_count)
+
++    doc = REXML::Document.new(XML_WITH_NESTED_EMPTY_ENTITY)
++    assert_raise(RuntimeError) do
++      doc.root.children.first.value
++    end
++    REXML::Document.entity_expansion_limit = 100
++    assert_equal(100, REXML::Document.entity_expansion_limit)
++    doc = REXML::Document.new(XML_WITH_NESTED_EMPTY_ENTITY)
++    assert_raise(RuntimeError) do
++      doc.root.children.first.value
++    end
++    assert_equal(101, doc.entity_expansion_count)
++
+     REXML::Document.entity_expansion_limit = 4
+     doc = REXML::Document.new(XML_WITH_4_ENTITY_EXPANSION)
+     assert_equal("\na\na a\n<\n", doc.root.children.first.value)
