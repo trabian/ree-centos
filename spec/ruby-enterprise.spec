@@ -15,6 +15,8 @@ URL: http://www.rubyenterpriseedition.com/
 Source0: ruby-enterprise-%{version}-%{phusion_release}.tar.gz
 
 Patch0: ssl_no_ec2m.patch
+Patch1: CVE-2014-8080-REXML-billion-laughs-attack.patch
+Patch2: CVE-2014-8090-REXML-incomplete-fix-for-CVE-2014-8080.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{phusion_release}-root-%(%{__id_u} -n)
 BuildRequires: readline readline-devel ncurses ncurses-devel gdbm gdbm-devel glibc-devel autoconf gcc unzip openssl-devel db4-devel byacc
